@@ -12,7 +12,7 @@ cd Banana-cracker-v2.0/
 
 chmod +x install.sh
 
-install.sh
+./install.sh
 
 python cracker.py
 
