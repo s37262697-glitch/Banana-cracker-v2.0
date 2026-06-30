@@ -1,28 +1,56 @@
+import os
 import time
-from colorama import Fore
+from colorama import init, Fore
 
-def crack_target(target_ip, wordlist):
-    # This is where your library (like ftplib or paramiko) would go
-    print(Fore.YELLOW + f"[*] Attacking {target_ip}...")
+# Initialize colorama
+init(autoreset=True)
+
+def show_banner():
+    banner = r"""
+     ____                                        ___ 
+    / __ )____ _____  ____ _____  ____ _   _   _|__ \
+   / __  / __ `/ __ \/ __ `/ __ \/ __ `/  | | / /_/ /
+  / /_/ / /_/ / / / / /_/ / / / / /_/ /   | |/ / __/ 
+ /_____/\__,_/_/ /_/\__,_/_/ /_/\__,_/    |___/____/
+    """
+    print(Fore.YELLOW + banner)
+
+def get_wordlist():
+    choice = input("Use default 'rockyou.txt'? (y/n): ").lower()
     
+    if choice == 'y':
+        path = "rockyou.txt"
+    else:
+        path = input("Enter the path to your wordlist: ")
+    
+    if not os.path.exists(path):
+        print("File not found.")
+        return None
+    return path
+
+def run_cracker():
+    show_banner()
+    
+    wordlist = get_wordlist()
+    if not wordlist:
+        return
+
+    print(f"Using wordlist: {wordlist}")
+    
+    # Example loop structure
     with open(wordlist, 'r', encoding='latin-1') as f:
         for password in f:
             password = password.strip()
             
             try:
-                # --- YOUR CONNECTION LOGIC HERE ---
-                # Example: ssh.connect(target_ip, password=password)
-                
-                # --- PROTECTION: THE THROTTLE ---
-                # Don't be a speed-freak, or you'll get banned in milliseconds
+                # Connection logic goes here
                 time.sleep(1) 
-                
-                print(Fore.GREEN + f"[+] Trying: {password}")
+                print(f"Trying: {password}")
                 
             except Exception as e:
-                # --- PROTECTION: THE SAFETY NET ---
-                # This keeps the script alive when the network ghosts you
-                print(Fore.RED + f"[-] Connection error on {password}: {e}")
-                time.sleep(2) # Give the server a breather if it gets mad
+                print(f"Error encountered: {e}")
+                time.sleep(2)
                 continue
-                
+
+if __name__ == "__main__":
+    run_cracker()
