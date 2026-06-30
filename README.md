@@ -10,7 +10,11 @@ git clone https://github.com/s37262697-glitch/Banana-cracker-v2.0.git
 
 cd Banana-cracker-v2.0/
 
-python fyp.py
+chmod +x install.sh
+
+install.sh
+
+python cracker.py
 
 UPDATE
 
