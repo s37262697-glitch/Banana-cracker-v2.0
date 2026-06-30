@@ -11,3 +11,9 @@ git clone https://github.com/s37262697-glitch/Banana-cracker-v2.0.git
 cd Banana-cracker-v2.0/
 
 python fyp.py
+
+UPDATE
+
+Re-did the whole codes!
+
+Added SSH support!
